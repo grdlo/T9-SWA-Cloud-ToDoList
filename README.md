@@ -42,7 +42,7 @@ The software must implement the following requirements and are organized in thre
 - **REQ_DESIGN_040** You must provide a functional and well-designed authentication system
 - **REQ_DESIGN_050** You must choose between part NodeJS, python, Golang, php, java for the backend*
 - **REQ_DESIGN_060** You must provide a framework choice) JavaScript^ based frontend (you are free on the JavaScript
-- **REQ_DESIGN_070** You mustto stay stored, even after a relaunch of the containers)^ have a persistent storage for the users and the tasks (the data needs
+- **REQ_DESIGN_070** You must to stay stored, even after a relaunch of the containers)^ have a persistent storage for the users and the tasks (the data needs)
 - **REQ_DESIGN_080** You must provide a docworking “docker-compose up” command.ker-compose file (docker - compose.yml) with a fully
 - **REQ_DESIGN_090** You must be able to manage two kinds of user: administrator and classic user
 - **REQ_DESIGN_100** You must provide a fully tested project, on both part: back and front
@@ -82,7 +82,7 @@ The software must implement the following requirements and are organized in thre
   - remove a user
   - list all the users
   - ban / unban a user
-- **REQ_IHM_050** The frontend part of the project the administrator panel) needs^ to be user-friendly and nice^ (even for
+- **REQ_IHM_050** The frontend part of the project the administrator panel) needs to be user-friendly and nice (even for
 
 #### d. Data requirements
 
