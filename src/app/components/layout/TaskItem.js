@@ -1,8 +1,12 @@
 import React, { Component } from "react";
+
+// @Material component
 import { Paper, Grid, Typography, Checkbox, Avatar, Icon, IconButton } from "@material-ui/core"
 import { withStyles } from "@material-ui/styles";
 import AssignementIcon from "@material-ui/icons/AssignmentIndRounded"
 import CreateIcon from "@material-ui/icons/Create"
+
+// @Custom style
 import CustomClasses from "./../styles/TaskItem"
 
 const StyledCheckBox = () => ({
@@ -25,7 +29,6 @@ class TaskItem extends Component {
         this.state = {
             taskId: this.props.id,
             checked: this.props.isCheck
-
         }
     }
 
