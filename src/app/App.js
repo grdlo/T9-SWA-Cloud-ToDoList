@@ -30,7 +30,6 @@ const authRedirection = () => {
  * @param {*} props all parameters of the component
  */
 const App = props => {
-    console.log(history);
     return (
         <BrowserRouter>
             {
