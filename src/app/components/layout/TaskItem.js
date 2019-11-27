@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Paper, Grid, Typography, Checkbox, Avatar, Icon, IconButton } from "@material-ui/core"
 import { withStyles } from "@material-ui/styles";
+import AssignementIcon from "@material-ui/icons/AssignmentIndRounded"
 import CreateIcon from "@material-ui/icons/Create"
 import CustomClasses from "./../styles/TaskItem"
 
@@ -39,7 +40,7 @@ class TaskItem extends Component {
                 <Grid container wrap="nowrap" alignItems="center" justify="space-between" direction="row" spacing={2}>
                     <Grid item xs={1}>
                         <Avatar variant="rounded" className={classes.taskIcon}>
-                            <Icon>{this.props.icon}</Icon>
+                            <AssignementIcon />
                         </Avatar>
                     </Grid>
                     <Grid item xs container>
