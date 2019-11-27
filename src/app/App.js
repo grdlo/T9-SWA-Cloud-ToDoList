@@ -1,26 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+// @npm Component
+import { BrowserRouter, Redirect, Route } from 'react-router-dom';
+import { createBrowserHistory } from "history";
+import Cookies from 'universal-cookie'
+
+// @Custom Component
+import AuthentificationPage from './pages/AuthentificationPage';
+import HomePage from './pages/HomePage'
+
+const history = createBrowserHistory();
+const cookies = new Cookies();
+
+/**
+ * Called in each page load
+ * if the user isn't connected, he will be redirected to the /login page
+ */
+const authRedirection = () => {
+    const pathname = history.location.pathname;
+    if (pathname !== '/login' && pathname !== '/register') {
+        const token = cookies.get("auth");
+        if (token === undefined)
+            return (<Redirect to="/login" />);
+    }
+}
+
+/**
+ * Called each time the Component is load
+ * @param {*} props all parameters of the component
+ */
+const App = props => {
+    console.log(history);
+    return (
+        <BrowserRouter>
+            {
+                /* If no authentification Cookie are available, this function will be called */
+                authRedirection()
+            }
+            <Route path="/" exact component={HomePage} />
+            <Route path="/login" exact component={AuthentificationPage} />
+        </BrowserRouter>
+    );
 }
 
 export default App;
