@@ -31,15 +31,8 @@ const useStyles = makeStyles(theme => ({
  */
 const Header = props => {
     const classes = useStyles();
-    const cookies = new Cookies()
-    const authCookie = cookies.get("auth");
-    let decoded = undefined;
-    try {
-        decoded = jwt(authCookie);
-    } catch(e) {
-        decoded = undefined
-    }
-    console.log(decoded);
+    const cookies = new Cookies();
+    let decoded = jwt(cookies.get("auth"));
     return (
         <div className={classes.root}>
             <AppBar position="static">
