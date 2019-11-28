@@ -10,7 +10,7 @@ class AuthentificationPage extends Component {
         const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjRlZGQ0MGM4Njc2MmUwZmIxMjAwMDAwMyIsInJvbGUiOiJTV0EifQ.GcDtJAN36WzgWhODkpxEBd-JF04voLVlEbez0sP2clc";
         const cookies = new Cookies();
         cookies.set("auth", jwt);
-
+        console.log('User connected');
         return (
             <Redirect to="/" />
         );
