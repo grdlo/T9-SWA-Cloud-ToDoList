@@ -5,10 +5,12 @@ import { BrowserRouter, Redirect, Route } from 'react-router-dom';
 import { createBrowserHistory } from "history";
 import Cookies from 'universal-cookie'
 
-// @Custom Component
+// @Page holder Component
 import LoginPage from './pages/LoginPage';
+import LogoutPage from './pages/LogoutPage';
 import HomePage from './pages/HomePage'
 
+const pageWithoutAuth = [ '/login', '/logout', '/register' ];
 const history = createBrowserHistory();
 const cookies = new Cookies();
 
@@ -18,7 +20,7 @@ const cookies = new Cookies();
  */
 const authRedirection = () => {
     const pathname = history.location.pathname;
-    if (pathname !== '/login' && pathname !== '/register') {
+    if (!pageWithoutAuth.includes(pathname)) {
         const token = cookies.get("auth");
         if (token === undefined)
             return (<Redirect to="/login" />);
@@ -38,6 +40,7 @@ const App = props => {
             }
             <Route path="/" exact component={HomePage} />
             <Route path="/login" exact component={LoginPage} />
+            <Route path="/logout" exact component={LogoutPage} />
         </BrowserRouter>
     );
 }

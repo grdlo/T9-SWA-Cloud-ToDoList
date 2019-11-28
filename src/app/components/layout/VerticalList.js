@@ -10,9 +10,34 @@ import CustomClasses from "./../styles/VerticalList"
 
 class VerticalList extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            filterActive: undefined
+        }
+    }
+
+    handleFilterOptions = option => {
+        this.setState({ filterActive: option });
+    }
+
     render = () => {
         const { classes } = this.props
         return (
+            <>
+            <Grid
+                container
+                direction="row"
+                justify="flex-end"
+                alignItems="flex-start"
+            >
+                <Grid item>
+                    test 1
+                </Grid>
+                <Grid item>
+                    test 2
+                </Grid>
+            </Grid>
             <Grid
                 className={classes.VerticalList}
                 direction="column"
@@ -36,6 +61,7 @@ class VerticalList extends Component {
                     })
                 }
             </Grid>
+            </>
         );
     }
 }
