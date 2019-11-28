@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import Cookies from 'universal-cookie'
 
 // @Custom Component
-class AuthentificationPage extends Component {
+class LoginPage extends Component {
     render = () => {
         const jwt = "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjRlZGQ0MGM4Njc2MmUwZmIxMjAwMDAwMyIsInJvbGUiOiJTV0EifQ.GcDtJAN36WzgWhODkpxEBd-JF04voLVlEbez0sP2clc";
         const cookies = new Cookies();
@@ -17,4 +17,4 @@ class AuthentificationPage extends Component {
     }
 }
 
-export default AuthentificationPage;
+export default LoginPage;

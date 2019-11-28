@@ -6,7 +6,7 @@ import { createBrowserHistory } from "history";
 import Cookies from 'universal-cookie'
 
 // @Custom Component
-import AuthentificationPage from './pages/AuthentificationPage';
+import LoginPage from './pages/LoginPage';
 import HomePage from './pages/HomePage'
 
 const history = createBrowserHistory();
@@ -37,7 +37,7 @@ const App = props => {
                 authRedirection()
             }
             <Route path="/" exact component={HomePage} />
-            <Route path="/login" exact component={AuthentificationPage} />
+            <Route path="/login" exact component={LoginPage} />
         </BrowserRouter>
     );
 }
