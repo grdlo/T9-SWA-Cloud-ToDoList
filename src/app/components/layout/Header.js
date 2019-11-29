@@ -33,10 +33,6 @@ const history = createBrowserHistory();
  */
 const Header = props => {
     const classes = useStyles();
-    const cookies = new Cookies();
-    let decoded = jwt(cookies.get("auth"));
-    const admin = (decoded.role === "SWA");
-
     const [redirection, setRedirection] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -59,7 +55,6 @@ const Header = props => {
                     <Typography variant="h6" className={classes.title}>
                         Application
                     </Typography>
-                    {admin && (
                         <div>
                             <IconButton
                                 aria-label="account of current user"
@@ -85,12 +80,11 @@ const Header = props => {
                                 open={open}
                                 onClose={handleClose}
                             >
-                                <MenuItem onClick={() => setRedirection('/')}>Home</MenuItem>
-                                <MenuItem onClick={() => setRedirection('/profile')}>Profile</MenuItem>
-                                <MenuItem onClick={() => setRedirection('/logout')}>Logout</MenuItem>
+                                <MenuItem onClick={() => {}}>Home</MenuItem>
+                                <MenuItem onClick={() => {}}>Profile</MenuItem>
+                                <MenuItem onClick={() => { handleClose(); props.logoutCallback();}}>Logout</MenuItem>
                             </Menu>
                         </div>
-                    )}
                 </Toolbar>
             </AppBar>
         </div>
