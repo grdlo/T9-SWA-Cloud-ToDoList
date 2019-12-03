@@ -6,7 +6,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-const uniqid = require('uniqid');
 
 const MONGODB_URI = 'mongodb+srv://admin:admin@atlastrial-erjzc.mongodb.net/test?retryWrites=true&w=majority';
 
@@ -23,13 +22,17 @@ app.use(bodyParser.json());
 app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, access-token');
     return next();
 });
 
 // Routes files
+const userRoute = require('./routes/userRoute');
+const authRoute = require('./routes/authRoute');
 
 // API routes
+app.use('/users', userRoute);
+app.use('/auth', authRoute);
 
 // Error route
 app.use((error, req, res, next) => {
