@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-// @material component
-import { Button, Modal, Card, Typography, CardActions, CardContent } from '@material-ui/core';
-import { withStyles } from '@material-ui/styles';
-
 // @npm component
 import Cookies from 'universal-cookie';
 
@@ -13,9 +9,8 @@ import HomePage from './pages/HomePage'
 
 // @custom component
 import Header from './components/layout/Header';
-
-// @jss component
-import CustomClasses from "./components/styles/Modal"
+import LoginModal from './components/layout/LoginModal';
+import Private from './components/utils/Private';
 
 const cookies = new Cookies();
 
@@ -27,48 +22,42 @@ class App extends Component {
     }
 
     /**
-     * Check authentification state 
+     * Load authentification on loading page
      */
     isAuthenticate = () => {
         const accessToken = cookies.get("access-token");
-        /**
-         * CREATE REQUEST ON SERVER FOR CHECKING ACCESS TOKEN
-         */
         if (accessToken !== undefined && accessToken !== '')
             return ({ authenticate: true, openAuthModal: false })
         return ({ authenticate: false, openAuthModal: true });
     }
 
+    /**
+     * Allow a button to open a modal which will request an authentification from the user
+     */
     handleConnection = () => {
+        // if user already connected, do nothing
+        if (this.state.authenticate)
+            return;
         /**
-         * CREATE ON SERVER FOR GETTING ACCES TOKEN
+         * CREATE SERVER REQUEST FOR GETTING ACCES TOKEN
          */
+
+        // Creating a cookie with the authentification token and refresh state
         cookies.set("access-token", "--token--", { path: "/" });
         this.setState({ authenticate: true, openAuthModal: false });
     }
 
+    /**
+     * Logout method, allow to a button to disconnect a user
+     */
     handleLogout = () => {
-        console.log("Logout handled");
+        // if user already disconnected, do nothing
+        if (!this.state.authenticate)
+            return;
+
+        // Removing the cookie with the authentification token and refresh state
         cookies.remove("access-token", { path: "/" });
         this.setState({ authenticate: false, openAuthModal: true });
-    }
-
-    /**
-     * PrivateRoute creator for blocking access of user not unauthenticate
-     */
-    PrivateRoute = ({ children, rest }) => {
-        return (
-            <Route
-                {...rest}
-                render={
-                    ({ location }) => {
-                        if (this.state.authenticate === true)
-                            return (children);
-                        return (<></>);
-                    }
-                }
-            />
-        );
     }
 
     /**
@@ -76,33 +65,19 @@ class App extends Component {
      */
     render = () => {
         console.log(this.state);
-        const { classes } = this.props;
         return (
             <Router>
                 <Header logoutCallback={this.handleLogout.bind(this)} />
                 <Switch>
-                    <this.PrivateRoute path="/" component={HomePage} exact />
+                    <Private show={this.state.authenticate}>
+                    <Route path="/" component={HomePage} exact />
+                    </Private>
                 </Switch>
-                <Modal
-                    aria-labelledby="authentification-modal-title"
-                    aria-describedby="authentification-modal-description"
-                    className={classes.modal}
-                    open={this.state.openAuthModal}
-                >
-                    <Card className={classes.paper}>
-                        <CardContent>
-                            <Typography>click on Connect for accessing this website</Typography>
-                        </CardContent>
-                        <CardActions>
-                            <Button size="small" color="primary" onClick={() => this.handleConnection()}>
-                                Connect
-                            </Button>
-                        </CardActions>
-                    </Card>
-                </Modal>
+                <LoginModal loginCallback={this.handleConnection.bind(this)}
+                    open={this.state.openAuthModal} />
             </Router>
         );
     }
 }
 
-export default withStyles(CustomClasses)(App);
+export default App;

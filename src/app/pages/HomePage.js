@@ -18,8 +18,6 @@ const list = [
 ];
 
 const HomePage = props => {
-
-    console.log(props.auth);
     return (
         <div>
             <Container>
