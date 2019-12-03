@@ -4,9 +4,12 @@ import React from 'react';
 import { Container, Typography } from '@material-ui/core';
 import { orange } from '@material-ui/core/colors';
 
+// @Jss component
+import PageStyle from '../components/styles/Page';
+
 // @Custom component
-import Header from '../components/layout/Header'
 import VerticalList from '../components/layout/VerticalList';
+import { makeStyles } from '@material-ui/styles';
 
 /**
  * Called each time the Component is load
@@ -18,13 +21,14 @@ const list = [
 ];
 
 const HomePage = props => {
+    const classes = (makeStyles(PageStyle))();
     return (
         <div>
-            <Container>
-                <Typography>
-                    This is the HomePage
+            <Container className={classes.page}>
+                <Typography className={classes.title} variant="h5">
+                    Tasks
                 </Typography>
-                { /* <VerticalList list={list} /> */}
+                <VerticalList list={list} />
             </Container>
         </div>
     );

@@ -26,19 +26,6 @@ class VerticalList extends Component {
         return (
             <>
             <Grid
-                container
-                direction="row"
-                justify="flex-end"
-                alignItems="flex-start"
-            >
-                <Grid item>
-                    test 1
-                </Grid>
-                <Grid item>
-                    test 2
-                </Grid>
-            </Grid>
-            <Grid
                 className={classes.VerticalList}
                 direction="column"
                 justify="center"
