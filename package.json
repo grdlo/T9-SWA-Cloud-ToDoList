@@ -10,21 +10,29 @@
     "@material-ui/utils": "^4.5.2",
     "@types/react": "^16.9.13",
     "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
     "date-fns": "^2.1.0",
+    "express": "^4.17.1",
     "history": "^4.10.1",
     "jwt-decode": "^2.2.0",
+    "mongoose": "^5.7.13",
+    "morgan": "^1.9.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
     "typescript": "^3.7.2",
+    "uniqid": "^5.2.0",
     "universal-cookie": "^4.0.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "eject": "react-scripts eject",
-    "test": "react-scripts test"
+    "start": "echo \"For starting the project please do :\" && echo \"\t'npm run app-start' wich will run the react app\" && echo \"\t'npm run api-start' wich will run the nodeJS api\"",
+    "app": "react-scripts start",
+    "app-start": "react-scripts start",
+    "api": "node ./src/api/index.js",
+    "api-start": "node ./src/api/index.js",
+    "app-build": "react-scripts build",
+    "app-eject": "react-scripts eject"
   },
   "eslintConfig": {
     "extends": "react-app"
