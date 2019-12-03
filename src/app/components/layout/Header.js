@@ -45,46 +45,53 @@ const Header = props => {
         setAnchorEl(null);
     };
 
+    let admin = false;
+    if (props.auth === true) {
+        const cookies = new Cookies();
+        const data = jwt(cookies.get("access-token"));
+        admin = (data.role === "SWA");
+    }
+
     if (redirection !== '' && history.location.pathname !== redirection) {
         return (<Redirect to={redirection} />);
     }
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar color={(admin) ? 'secondary' : 'primary'} position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        Application
+                        { admin ? 'Administrator Pannel' : 'Application' }
                     </Typography>
-                        <div>
-                            <IconButton
-                                aria-label="account of current user"
-                                aria-controls="menu-appbar"
-                                aria-haspopup="true"
-                                onClick={handleMenu}
-                                color="inherit"
-                            >
-                                <AccountCircle />
-                            </IconButton>
-                            <Menu
-                                id="menu-appbar"
-                                anchorEl={anchorEl}
-                                anchorOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                keepMounted
-                                transformOrigin={{
-                                    vertical: 'top',
-                                    horizontal: 'right',
-                                }}
-                                open={open}
-                                onClose={handleClose}
-                            >
-                                <MenuItem onClick={() => {}}>Home</MenuItem>
-                                <MenuItem onClick={() => {}}>Profile</MenuItem>
-                                <MenuItem onClick={() => { handleClose(); props.logoutCallback();}}>Logout</MenuItem>
-                            </Menu>
-                        </div>
+                    <div>
+                        <IconButton
+                            aria-label="account of current user"
+                            aria-controls="menu-appbar"
+                            aria-haspopup="true"
+                            onClick={handleMenu}
+                            color="inherit"
+                        >
+                            <AccountCircle />
+                        </IconButton>
+                        <Menu
+                            id="menu-appbar"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={handleClose}
+                        >
+                            <MenuItem onClick={() => { }}>Home</MenuItem>
+                            <MenuItem onClick={() => { }}>Profile</MenuItem>
+                            <MenuItem onClick={() => { handleClose(); props.logoutCallback(); }}>Logout</MenuItem>
+                        </Menu>
+                    </div>
                 </Toolbar>
             </AppBar>
         </div>

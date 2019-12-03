@@ -43,7 +43,8 @@ class App extends Component {
          */
 
         // Creating a cookie with the authentification token and refresh state
-        cookies.set("access-token", "--token--", { path: "/" });
+        const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlNXQSJ9.TVacysDB3wc00WDqvLxkIh9lorsMOigyDGaK-LDGP3U";
+        cookies.set("access-token", fakeToken, { path: "/" });
         this.setState({ authenticate: true, openAuthModal: false });
     }
 
@@ -67,10 +68,10 @@ class App extends Component {
         console.log(this.state);
         return (
             <Router>
-                <Header logoutCallback={this.handleLogout.bind(this)} />
+                <Header logoutCallback={this.handleLogout.bind(this)} auth={this.state.authenticate} />
                 <Switch>
                     <Private show={this.state.authenticate}>
-                    <Route path="/" component={HomePage} exact />
+                        <Route path="/" component={HomePage} exact />
                     </Private>
                 </Switch>
                 <LoginModal loginCallback={this.handleConnection.bind(this)}
