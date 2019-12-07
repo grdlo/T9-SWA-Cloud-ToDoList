@@ -8,5 +8,11 @@ export default {
         '& > *': {
             margin: 16
         }
+    },
+    submitControl: {
+        display: 'inline',
+        '& > *': {
+            marginRight: 8
+        }
     }
 }

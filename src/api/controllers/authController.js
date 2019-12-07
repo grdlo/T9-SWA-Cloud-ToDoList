@@ -14,7 +14,7 @@ const User = require('../models/userSchema');
  */
 exports.login = (req, res, next) => {
     User.findOne(
-        { email: req.body.email }
+        { username: req.body.username }
     ).select("-__v").then(doc => {
         if (!doc) throw HTTPError.NotFound("user does not exist");
         bcrypt.compare(req.body.password, doc.password).then(result => {

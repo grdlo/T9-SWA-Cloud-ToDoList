@@ -1,4 +1,3 @@
-const emailValidator = require('email-validator');
 const HTTPError = require('http-errors');
 const bcrypt = require('bcryptjs');
 
@@ -55,38 +54,30 @@ exports.getOneUser = (req, res, next) => {
  * @param {*} next next middleware
  */
 exports.newUser = (req, res, next) => {
-
-    if (!emailValidator.validate(req.body.email))
-        return next(HTTPError.BadRequest("Invalid mail"));
-
     User.findOne({
-        $or: [
-            { email: req.body.email },
-            { name: req.body.name }
-        ]
+        username: req.body.username 
     }).catch(error => {
-        // catching error
-        return next(error);
-    }).then(doc => {
-        if (doc) throw HTTPError.Conflict("Email or Name already in use");
-        return bcrypt.hash(req.body.password, 12);
+            // catching error
+            return next(error);
+        }).then(doc => {
+            if (doc) throw HTTPError.Conflict("username already in use");
+            return bcrypt.hash(req.body.password, 12);
 
-    }).then(hashedPassword => {
-        const user = new User({
-            name: req.body.name,
-            email: req.body.email,
-            password: hashedPassword
+        }).then(hashedPassword => {
+            const user = new User({
+                username: req.body.username,
+                password: hashedPassword
+            });
+            return user.save();
+
+        }).then(result => {
+            result.password = undefined;
+            result.__v = undefined;
+            res.status(201).json({ user: result });
+        }).catch(error => {
+            // catching error
+            return next(error);
         });
-        return user.save();
-
-    }).then(result => {
-        result.password = undefined;
-        result.__v = undefined;
-        res.status(201).json({ user: result });
-    }).catch(error => {
-        // catching error
-        return next(error);
-    });
 }
 
 

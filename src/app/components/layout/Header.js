@@ -33,7 +33,7 @@ const history = createBrowserHistory();
  */
 const Header = props => {
     const classes = useStyles();
-    const [redirection, setRedirection] = React.useState('');
+    const [redirection] = React.useState('');
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
 

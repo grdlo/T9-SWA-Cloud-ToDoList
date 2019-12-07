@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // @npm component
 import Cookies from 'universal-cookie';
+import Axios from 'axios';
 
 // @page holder component
 import HomePage from './pages/HomePage'
@@ -11,6 +11,7 @@ import HomePage from './pages/HomePage'
 import Header from './components/layout/Header';
 import LoginModal from './components/layout/LoginModal';
 import Private from './components/utils/Private';
+import RegisterForm from './components/layout/RegisterForm';
 
 const cookies = new Cookies();
 
@@ -27,25 +28,25 @@ class App extends Component {
     isAuthenticate = () => {
         const accessToken = cookies.get("access-token");
         if (accessToken !== undefined && accessToken !== '')
-            return ({ authenticate: true, openAuthModal: false })
-        return ({ authenticate: false, openAuthModal: true });
+            return ({ authenticate: true, openAuthModal: false, openRegisterForm: false, route: '/', error: false })
+        return ({ authenticate: false, openAuthModal: true, openRegisterForm: false, route: '/', error: false });
     }
 
     /**
      * Allow a button to open a modal which will request an authentification from the user
      */
-    handleConnection = () => {
+    handleConnection = (username, password) => {
         // if user already connected, do nothing
         if (this.state.authenticate)
             return;
-        /**
-         * CREATE SERVER REQUEST FOR GETTING ACCES TOKEN
-         */
-
-        // Creating a cookie with the authentification token and refresh state
-        const fakeToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkpvaG4gRG9lIiwicm9sZSI6IlNXQSJ9.TVacysDB3wc00WDqvLxkIh9lorsMOigyDGaK-LDGP3U";
-        cookies.set("access-token", fakeToken, { path: "/" });
-        this.setState({ authenticate: true, openAuthModal: false });
+        // authentication for getting a personnel jwt token
+        Axios.post('http://localhost:8080/auth/login', { username: username, password: password })
+            .then(response => {
+                cookies.set("access-token", response.data.token, { path: '/' });
+                this.setState({ authenticate: true, openAuthModal: false, openRegisterForm: false, error: false });
+            }).catch(error => {
+                this.setState({ authenticate: false, openAuthModal: true, openRegisterForm: false, error: true });
+            });
     }
 
     /**
@@ -55,28 +56,33 @@ class App extends Component {
         // if user already disconnected, do nothing
         if (!this.state.authenticate)
             return;
-
         // Removing the cookie with the authentification token and refresh state
         cookies.remove("access-token", { path: "/" });
-        this.setState({ authenticate: false, openAuthModal: true });
+        this.setState({ authenticate: false, openAuthModal: true, openRegisterForm: false });
+    }
+
+    /**
+     * Switch between the Connection modal and the Creation Modal
+     */
+    handleSwitchModal = () => {
+        this.setState({ openAuthModal: !this.state.openAuthModal, openRegisterForm: !this.state.openRegisterForm })
     }
 
     /**
      * Called each time the Component is load
      */
     render = () => {
-        console.log(this.state);
         return (
-            <Router>
+            <>
                 <Header logoutCallback={this.handleLogout.bind(this)} auth={this.state.authenticate} />
-                <Switch>
-                    <Private show={this.state.authenticate}>
-                        <Route path="/" component={HomePage} exact />
-                    </Private>
-                </Switch>
-                <LoginModal loginCallback={this.handleConnection.bind(this)}
-                    open={this.state.openAuthModal} />
-            </Router>
+                <LoginModal loginCallback={this.handleConnection.bind(this)} handleSwitchModal={this.handleSwitchModal.bind(this)}
+                    open={this.state.openAuthModal} error={this.state.error} />
+                <RegisterForm handleSwitchModal={this.handleSwitchModal.bind(this)}
+                    open={this.state.openRegisterForm} />
+                <Private show={this.state.authenticate}>
+                    <HomePage />
+                </Private>
+            </>
         );
     }
 }

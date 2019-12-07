@@ -27,14 +27,11 @@ class VerticalList extends Component {
             <>
             <Grid
                 className={classes.VerticalList}
-                direction="column"
-                justify="center"
-                alignItems="center"
             >
                 {
                     this.props.list.map((item) => {
                         return (
-                            <Grid item>
+                            <Grid item key={item._id}>
                                 <TaskItem
                                     id={item._id}
                                     key={item._id}

@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 
 // @Material component
-import { Paper, Grid, Typography, Checkbox, Avatar, Icon, IconButton } from "@material-ui/core"
+import { Paper, Grid, Typography, Checkbox, Avatar, IconButton } from "@material-ui/core"
 import { withStyles } from "@material-ui/styles";
 import AssignementIcon from "@material-ui/icons/AssignmentIndRounded"
-import CreateIcon from "@material-ui/icons/Create"
+import DeleteIcon from "@material-ui/icons/Delete"
 
 // @Custom style
 import CustomClasses from "./../styles/TaskItem"
@@ -13,6 +13,7 @@ const StyledCheckBox = () => ({
     root: { ...CustomClasses.taskCheckBox },
     checked: { ...CustomClasses['&$checked'] }
 });
+
 const GreenCheckBox = withStyles(StyledCheckBox)(Checkbox);
 
 const LiveStyle = {
@@ -53,7 +54,7 @@ class TaskItem extends Component {
                     </Grid>
                     <Grid item xs={3}>
                         <IconButton aria-label="delete" className={classes.margin}>
-                            <CreateIcon fontSize="small" />
+                            <DeleteIcon fontSize="small" />
                         </IconButton>
                         <GreenCheckBox
                             checked={this.state.isCheck}
