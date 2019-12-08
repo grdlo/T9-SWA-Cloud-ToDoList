@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 
 // @Material component
-import { Paper, Grid, Typography, Checkbox, Avatar, IconButton, Box } from "@material-ui/core"
+import { Paper, Grid, Typography, Avatar, IconButton, Box } from "@material-ui/core";
 import { withStyles } from "@material-ui/styles";
-import AssignementIcon from "@material-ui/icons/AssignmentIndRounded"
-import DeleteIcon from "@material-ui/icons/Delete"
+import EditIcon from "@material-ui/icons/CreateRounded";
+import DeleteIcon from "@material-ui/icons/DeleteRounded";
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import ViewIcon from '@material-ui/icons/VisibilityRounded';
 
 // @npm Component
 import Cookies from 'universal-cookie';
@@ -15,46 +17,12 @@ import CustomClasses from "./../styles/TaskItem"
 
 const cookies = new Cookies();
 
-const StyledCheckBox = () => ({
-    root: { ...CustomClasses.taskCheckBox },
-    checked: { ...CustomClasses['&$checked'] }
-});
-
-const GreenCheckBox = withStyles(StyledCheckBox)(Checkbox);
-
-const LiveStyle = {
-    ...CustomClasses,
-    taskIcon: props => ({
-        backgroundColor: props.color
-    })
-}
-
-class TaskItem extends Component {
-
-    handleChange = () => {
-        const accessToken = cookies.get("access-token");
-        Axios.request({
-            url: 'http://localhost:8080/tasks/' + this.props.id,
-            method: 'patch',
-            headers: {
-                'access-token': accessToken
-            },
-            data: {
-                task: {
-                    done: !this.props.done
-                }
-            }
-        }).then(response => {
-            this.props.update();
-        }).catch(error => {
-            console.log(error.response);
-        })
-    }
+class UserItem extends Component {
 
     handleRemove = () => {
         const accessToken = cookies.get("access-token");
         Axios.request({
-            url: 'http://localhost:8080/tasks/' + this.props.id,
+            url: 'http://localhost:8080/users/' + this.props.userId,
             method: 'delete',
             headers: {
                 'access-token': accessToken
@@ -79,8 +47,8 @@ class TaskItem extends Component {
                     <Grid item xs>
                         <Box component="div" display="flex"
                             alignItems="center">
-                            <Avatar variant="rounded" className={classes.taskIcon}>
-                                <AssignementIcon />
+                            <Avatar className={classes.taskIcon}>
+                                <AccountCircle />
                             </Avatar>
                             <Typography className={classes.title}>
                                 {this.props.name}
@@ -88,14 +56,14 @@ class TaskItem extends Component {
                         </Box>
                     </Grid>
                     <Grid item>
+                        <IconButton aria-label="viewTask" className={classes.margin}
+                            onClick={() => this.props.viewSwitch(this.props.userId)} >
+                            <ViewIcon fontSize="small" />
+                        </IconButton>
                         <IconButton aria-label="delete" className={classes.margin}
                             onClick={this.handleRemove} >
                             <DeleteIcon fontSize="small" />
                         </IconButton>
-                        <GreenCheckBox
-                            checked={this.props.done}
-                            onChange={this.handleChange}
-                        />
                     </Grid>
                 </Grid>
             </Paper>
@@ -103,4 +71,4 @@ class TaskItem extends Component {
     }
 }
 
-export default withStyles(LiveStyle)(TaskItem);
+export default withStyles(CustomClasses)(UserItem);

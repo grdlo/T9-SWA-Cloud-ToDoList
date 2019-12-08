@@ -4,5 +4,10 @@ export default {
     },
     title: {
         marginBottom: 25
+    },
+    spacing: {
+        '& > *': {
+            margin: 8
+        }
     }
 }

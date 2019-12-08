@@ -65,10 +65,10 @@ class LoginModal extends Component {
                             <FormControl margin='normal' className={classes.submitControl}>
                                 <Button variant='contained' color="primary" onClick={this.handleConnection}>
                                     Connexion
-                            </Button>
+                                </Button>
                                 <Button color="primary" onClick={this.props.handleSwitchModal}>
                                     New account
-                            </Button>
+                                </Button>
                             </FormControl>
                         </form>
                     </CardContent>

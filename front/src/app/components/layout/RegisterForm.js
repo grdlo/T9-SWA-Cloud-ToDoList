@@ -49,10 +49,8 @@ class RegisterForm extends Component {
             username: this.state.username,
             password: this.state.password
         }).then(response => {
-            console.log(response);
             this.setState({ snackbar: { display: true, variant: 'success', message: 'registration success' } })
         }).catch(error => {
-            console.log(error.response);
             this.setState({ snackbar: { display: true, variant: 'error', message: error.response.data.error } })
         });
     }
@@ -75,10 +73,15 @@ class RegisterForm extends Component {
                         <CardContent>
                             <form>
                                 <Typography variant='h6'>New Account </Typography>
-                                <Typography>Please register your information </Typography>
+                                {
+                                    !this.props.adminPanel &&
+                                    <>
+                                        <Typography>Please register your information </Typography>
+                                    </>
+                                }
                                 <FormControl fullWidth={true} margin='dense'>
                                     <TextField id="registerUsername" label="Username" variant="outlined"
-                                        value={this.state.name} onChange={this.handleUsername} autoComplete='off'/>
+                                        value={this.state.name} onChange={this.handleUsername} autoComplete='off' />
                                 </FormControl>
                                 <FormControl fullWidth={true} margin='dense'>
                                     <TextField id="registerPassword" label="password" type="password" variant="outlined"
@@ -89,7 +92,9 @@ class RegisterForm extends Component {
                                         Creation
                                     </Button>
                                     <Button color="primary" onClick={this.props.handleSwitchModal}>
-                                        Connexion
+                                        {
+                                            this.props.adminPanel ? 'cancel' : 'Connexion'
+                                        }
                                     </Button>
                                 </FormControl>
                             </form>

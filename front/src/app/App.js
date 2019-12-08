@@ -28,8 +28,8 @@ class App extends Component {
     isAuthenticate = () => {
         const accessToken = cookies.get("access-token");
         if (accessToken !== undefined && accessToken !== '')
-            return ({ authenticate: true, openAuthModal: false, openRegisterForm: false, route: '/', error: false })
-        return ({ authenticate: false, openAuthModal: true, openRegisterForm: false, route: '/', error: false });
+            return ({ authenticate: true, openAuthModal: false, openRegisterForm: false, error: false })
+        return ({ authenticate: false, openAuthModal: true, openRegisterForm: false, error: false });
     }
 
     /**
@@ -78,7 +78,7 @@ class App extends Component {
                 <LoginModal loginCallback={this.handleConnection.bind(this)} handleSwitchModal={this.handleSwitchModal.bind(this)}
                     open={this.state.openAuthModal} error={this.state.error} />
                 <RegisterForm handleSwitchModal={this.handleSwitchModal.bind(this)}
-                    open={this.state.openRegisterForm} />
+                    open={this.state.openRegisterForm} adminPanel={false} />
                 <Private show={this.state.authenticate}>
                     <HomePage />
                 </Private>

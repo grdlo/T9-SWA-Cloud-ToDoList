@@ -3,7 +3,10 @@ import { green } from "@material-ui/core/colors"
 export default {
     taskItem: {
         padding: 8,
-        margin: 12
+        marginTop: 16,
+        marginBottom: 16,
+        marginRight: 8,
+        marginLeft: 8
     },
     taskCheckBox: {
         '&$checked': {
