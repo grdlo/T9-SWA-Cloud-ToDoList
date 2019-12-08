@@ -29,8 +29,10 @@ app.use((req, res, next) => {
 // Routes files
 const userRoute = require('./routes/userRoute');
 const authRoute = require('./routes/authRoute');
+const taskRoute = require('./routes/taskRoute');
 
 // API routes
+app.use('/tasks', taskRoute);
 app.use('/users', userRoute);
 app.use('/auth', authRoute);
 

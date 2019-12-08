@@ -3,6 +3,7 @@ import React, { Component } from "react";
 // @Material component
 import { Grid } from "@material-ui/core"
 import { withStyles } from "@material-ui/styles";
+import { orange } from '@material-ui/core/colors';
 
 // @Custom Style
 import TaskItem from "./TaskItem";
@@ -35,10 +36,11 @@ class VerticalList extends Component {
                                 <TaskItem
                                     id={item._id}
                                     key={item._id}
-                                    name={item.name}
+                                    name={item.title}
                                     icon={item.icon}
-                                    color={item.color}
-                                    isCheck={item.checked}
+                                    color={orange[400]}
+                                    done={item.done}
+                                    update={this.props.update}
                                 />
                             </Grid>
                         );

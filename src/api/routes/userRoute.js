@@ -1,6 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const taskController = require('../controllers/taskController');
 
 const Router = express.Router();
 
@@ -8,6 +9,11 @@ const Router = express.Router();
  * GET /users/
  */
 Router.get('/', authController.verifyAdmin, userController.getUser);
+
+/**
+ * GET /users/tasks/ (of user)
+ */
+Router.get('/:userId/tasks', authController.verifyPersonnal, taskController.getUserTask);
 
 /**
  * PUT /users/

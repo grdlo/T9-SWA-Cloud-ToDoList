@@ -1,8 +1,7 @@
 const HTTPError = require('http-errors');
-const bcrypt = require('bcryptjs');
 
-const tokenReader = require('../utils/tokenReader');
-const Task = require('../models/taskSchema');
+const tokenReader = require('./../utils/tokenReader');
+const Task = require('./../models/taskSchema');
 
 /**
  *  GET all Tasks in db
@@ -32,12 +31,12 @@ exports.getTask = (req, res, next) => {
  */
 exports.getUserTask = (req, res, next) => {
     Task.find({ author: req.params.userId })
-    .then(tasks => {
-        res.send(200).json({ tasks: tasks})
-    }).catch(error => {
-        // catching error
-        return next(error);
-    });
+        .then(tasks => {
+            res.status(200).json({ tasks: tasks })
+        }).catch(error => {
+            // catching error
+            return next(error);
+        });
 }
 
 /**
@@ -72,12 +71,13 @@ exports.getOneTask = (req, res, next) => {
  */
 exports.newTask = (req, res, next) => {
     // Create new task
-    const Task = new Task({
-        author: tokenReader.get(req),
+    const author = tokenReader.get(req);
+    const task = new Task({
+        author: author,
         title: req.body.title
     });
     // Saving the new task
-    Task.save()
+    task.save()
         .then(result => {
             result.__v = undefined;
             res.status(201).json({ task: result });
@@ -101,16 +101,13 @@ exports.updateTask = (req, res, next) => {
         _id: req.params.taskId
     }).then(doc => {
         if (!doc) throw HTTPError.NotFound("Task does not exist");
-        const keys = Object.keys(req.body);
+        const keys = Object.keys(req.body.task);
         // passing throw each key and updating them
-        keys.forEach(key => {
-            if (doc[key])
-                doc[key] = req.body[key];
-        });
+        doc.done = req.body.task.done;
         // Saving the doc
         return doc.save();
     }).then(result => {
-        res.status(200).json({ log: 'updated' });
+        res.status(200).json({ log: result });
     }).catch(error => {
         // catching error
         return next(error);
@@ -129,7 +126,7 @@ exports.removeTask = (req, res, next) => {
     Task.deleteOne({
         _id: req.params.taskId
     }).then(result => {
-        res.status(200).json({ log: 'deleted' });
+        res.status(200).json({ log: result });
     }).catch(error => {
         // catching error
         return next(error);

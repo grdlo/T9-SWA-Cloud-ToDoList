@@ -1,17 +1,11 @@
 const jwt = require('jsonwebtoken');
 
-const secretKey = require('./../utils/defaultSecretKey');
-
 exports.get = (req) => {
-    if (!req.header('access-token')) return '';
-    jwt.verify(req.header('access-token'), secretKey.secret, (err, decoded) => {
-        if (err)
-            return '';
-        if (decoded.role !== 'SWA')
-            return decoded.id;
-        return req.body.userid;
-    }).catch(error => {
-        // catching error
-        return '';
-    });
+    if (!req.header('access-token')) return "PLOP";
+    let decoded = jwt.decode(req.header('access-token'), {json: true});
+    console.log(req.header('access-token'));
+    console.log(decoded);
+    if (decoded && (decoded.role !== 'SWA' || !req.body.hasOwnProperty('userid') || req.body.userid === undefined))
+        return decoded.id;
+    return req.body.userid;
 }
