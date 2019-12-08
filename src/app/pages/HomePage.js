@@ -77,9 +77,9 @@ class HomePage extends Component {
                             </Button>
                         </Grid>
                     </Grid>
-                    <VerticalList list={this.state.tasks} update={this.loadUserTask}/>
+                    <VerticalList list={this.state.tasks} update={this.loadUserTask.bind(this)}/>
                 </Container>
-                <NewTaskModal open={this.state.createModal} closeCallback={this.handleModalSwitch.bind(this)} />
+                <NewTaskModal open={this.state.createModal} closeCallback={this.handleModalSwitch.bind(this)} update={this.loadUserTask.bind(this)} />
             </div >
         );
     }

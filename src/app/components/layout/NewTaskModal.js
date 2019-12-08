@@ -41,7 +41,7 @@ class NewTaskModal extends Component {
                 }
             }).then(response => {
                 console.log(response);
-                this.props.creationCallback(response.data);
+                this.props.update();
             }).catch(error => {
                 this.setState({ error: true })
             })
