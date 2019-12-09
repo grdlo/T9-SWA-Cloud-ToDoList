@@ -185,7 +185,7 @@ class HomePage extends Component {
                     }
                 </Container>
                 <NewTaskModal open={this.state.createModal} closeCallback={this.handleModalSwitch.bind(this)} update={this.loadUserTask.bind(this)} />
-                <RegisterForm open={this.state.createUser} handleSwitchModal={this.handleModalSwitchCreateUser.bind()} adminPanel={true} />
+                <RegisterForm open={this.state.createUser} handleSwitchModal={this.handleModalSwitchCreateUser.bind()} update={this.loadUserProfile.bind(this)} adminPanel={true} />
             </div >
         );
     }

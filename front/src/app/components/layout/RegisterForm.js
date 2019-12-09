@@ -49,7 +49,8 @@ class RegisterForm extends Component {
             username: this.state.username,
             password: this.state.password
         }).then(response => {
-            this.setState({ snackbar: { display: true, variant: 'success', message: 'registration success' } })
+            this.setState({ snackbar: { display: true, variant: 'success', message: 'registration success' } });
+            this.props.update();
         }).catch(error => {
             this.setState({ snackbar: { display: true, variant: 'error', message: error.response.data.error } })
         });
