@@ -13,5 +13,5 @@ RUN npm install --silent
 COPY src /usr/app/src
 COPY public /usr/app/public
 
-EXPOSE 8080
+EXPOSE 3000
 CMD ["npm", "start"]
