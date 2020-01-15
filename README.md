@@ -1,4 +1,4 @@
-# Epitech 4th year Project « To-Do-List »
+# Epitech 5th year Project « To-Do-List »
 
 The aim of this project is to create a web to do list application based on JavaScript. The selected FrameWork we chosed are:
  - **Node JS**: used for the API
