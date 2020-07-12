@@ -26,9 +26,9 @@ T9-SWA-Cloud-ToDoList is a simple to do list wab application, you can Create and
 If you got any error, please create an issue.
 
 #### Authors
-- Louis Giraud ([@grdlo](https://github.com/grdlo))
-- Antoine El Samra ([@logicyugi](https://github.com/logicyugi))
-- Morgan Caron ([@MorganCaron](https://github.com/MorganCaron))
+- Louis ([@grdlo](https://github.com/grdlo))
+- Antoine ([@logicyugi](https://github.com/logicyugi))
+- Morgan ([@MorganCaron](https://github.com/MorganCaron))
 
 #### Licence
 
